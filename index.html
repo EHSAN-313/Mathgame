@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بازی ریاضی مینیمال</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/font.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Vazirmatn, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            width: 90%;
+            max-width: 400px;
+            padding: 2rem;
+            margin: 1rem;
+        }
+        h1 {
+            color: #2ecc71;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .instruction {
+            margin-bottom: 1.5rem;
+        }
+        .instruction p {
+            margin-bottom: 0.8rem;
+            padding-right: 0.5rem;
+            border-right: 2px solid #e0e0e0;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        button {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.2s ease;
+        }
+        button:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+        input:focus {
+            outline: none;
+            border-color: #2ecc71;
+        }
+        label {
+            display: block;
+            margin-bottom: 1rem;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 80%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .result-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2ecc71;
+            margin: 1rem 0;
+        }
+        .original-number {
+            color: #2ecc71;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        .close-modal {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .result-number {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>بازی ریاضی جذاب</h1>
+        
+        <div class="step active" id="step1">
+            <div class="instruction">
+                <p>1. عددی بین ۱ تا ۲۰ در نظر بگیرید</p>
+                <p>2. ۵ واحد به آن اضافه کنید</p>
+                <p>3. حاصل را در ۳ ضرب کنید</p>
+                <p>4. ۱۵ را از حاصل کم کنید</p>
+            </div>
+            <button id="nextBtn">انجام دادم، بریم ادامه →</button>
+        </div>
+        
+        <div class="step" id="step2">
+            <label>
+                عدد نهایی را وارد کنید:
+                <input type="number" id="finalNumber" placeholder="عدد شما">
+            </label>
+            <button id="calculateBtn">محاسبه کن</button>
+        </div>
+    </div>
+    
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <h2>نتیجه نهایی</h2>
+            <div class="result-number" id="dividedNumber"></div>
+            <div class="original-number" id="originalNumberText"></div>
+            <button class="close-modal" id="closeModal">بستن</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+        });
+        
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const finalNumber = parseFloat(document.getElementById('finalNumber').value);
+            
+            if (isNaN(finalNumber)) {
+                alert('لطفاً یک عدد معتبر وارد کنید');
+                return;
+            }
+            
+            const originalNumber = (finalNumber + 15) / 3 - 5;
+            const dividedByThree = finalNumber / 3;
+            
+            document.getElementById('dividedNumber').textContent = dividedByThree.toFixed(2);
+            document.getElementById('originalNumberText').innerHTML = `عدد اولیه شما: ${Math.round(originalNumber)} 😊`;
+            
+            document.getElementById('resultModal').style.display = 'flex';
+        });
+        
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('resultModal').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
