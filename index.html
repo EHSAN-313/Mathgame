@@ -4,14 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بازی ریاضی </title>
+    <!-- روش اول: استفاده از فونت سیستمی با پشتیبانی از فارسی -->
     <style>
+        @font-face {
+            font-family: 'System-Fa';
+            src: local('Segoe UI'), local('Roboto'), local('Tahoma');
+            unicode-range: U+0600-06FF;
+        }
+        
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: 'System-Fa', -apple-system, BlinkMacSystemFont, 
+                         "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background-color: #f8f9fa;
             display: flex;
             justify-content: center;
@@ -145,6 +153,12 @@
             }
         }
     </style>
+    <!-- روش دوم: فونت ایمنی برای دستگاه‌های بدون فونت فارسی -->
+    <script>
+        if (!document.fonts.check('1em Tahoma')) {
+            document.body.style.fontFamily = "'Segoe UI', 'Roboto', sans-serif";
+        }
+    </script>
 </head>
 <body>
     <div class="container">
